@@ -1,0 +1,114 @@
+    body {
+      font-family: "Poppins", sans-serif;
+      background:   rgba(1, 1, 1, 0.651);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 650px;
+      width: 100%;
+      background: #fff;
+      margin: 40px;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    h1 {
+      text-align: center;
+      color: #191414;
+      margin-bottom: 20px;
+    }
+    .progress-bar {
+      height: 12px;
+      width: 100%;
+      background: #eee;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 100%;
+      width: 0;
+      background: #1db954;
+      transition: width 0.3s ease;
+    }
+    .add-form {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    .add-form input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px 0 0 8px;
+      outline: none;
+    }
+    .add-form button {
+      padding: 10px 16px;
+      border: none;
+      background:  #2e2e2e;;
+      color: white;
+      font-weight: bold;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .add-form button:hover {
+      background: #148f3d;
+    }
+    .habit-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .habit-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f9f9f9;
+      padding: 14px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      transition: transform 0.2s;
+    }
+    .habit-item:hover {
+      transform: scale(1.02);
+    }
+    .habit-left {
+      display: flex;
+      flex-direction: column;
+    }
+    .habit-name {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .habit-streak {
+      font-size: 13px;
+      color: #666;
+    }
+    .habit-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    .habit-buttons button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .done {
+      background: #1db954;
+      color: white;
+    }
+    .not-done {
+      background: #ddd;
+      color: #333;
+    }
+    .delete {
+      background: crimson;
+      color: white;
+    }

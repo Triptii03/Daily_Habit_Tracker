@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Habit Tracker</title>
+<link rel="stylesheet" href="DailyhabitTracker.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🌱 Daily Habit Tracker</h1>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <form class="add-form" id="habitForm">
+      <input type="text" id="habitInput" placeholder="Enter new habit..." required />
+      <button type="submit">Add</button>
+    </form>
+
+    <ul class="habit-list" id="habitList"></ul>
+  </div>
+
+  <script>
+    const habitForm = document.getElementById("habitForm");
+    const habitInput = document.getElementById("habitInput");
+    const habitList = document.getElementById("habitList");
+    const progressBar = document.getElementById("progress");
+
+    let habits = JSON.parse(localStorage.getItem("habits")) || [];
+    let lastDate = localStorage.getItem("lastDate") || "";
+
+    const today = new Date().toLocaleDateString();
+    if (lastDate !== today) {
+      habits = habits.map(h => ({ ...h, done: false }));
+      localStorage.setItem("lastDate", today);
+    }
+
+    function saveHabits() {
+      localStorage.setItem("habits", JSON.stringify(habits));
+    }
+
+    function updateProgress() {
+      const total = habits.length;
+      const completed = habits.filter(h => h.done).length;
+      const percent = total > 0 ? (completed / total) * 100 : 0;
+      progressBar.style.width = percent + "%";
+    }
+
+    function renderHabits() {
+      habitList.innerHTML = "";
+      habits.forEach((habit, index) => {
+        const li = document.createElement("li");
+        li.className = "habit-item";
+        li.innerHTML = `
+          <div class="habit-left">
+            <span class="habit-name">${habit.name}</span>
+            <span class="habit-streak">🔥 Streak: ${habit.streak || 0} days</span>
+          </div>
+          <div class="habit-buttons">
+            <button class="${habit.done ? "done" : "not-done"}">
+              ${habit.done ? "Done" : "Mark Done"}
+            </button>
+            <button class="delete">Delete</button>
+          </div>
+        `;
+      
+        li.querySelector(".done, .not-done").addEventListener("click", () => {
+          if (!habit.done) habit.streak = (habit.streak || 0) + 1;
+          habit.done = !habit.done;
+          saveHabits();
+          renderHabits();
+        });
+       
+        li.querySelector(".delete").addEventListener("click", () => {
+          habits.splice(index, 1);
+          saveHabits();
+          renderHabits();
+        });
+        habitList.appendChild(li);
+      });
+      updateProgress();
+    }
+
+  
+    habitForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const newHabit = { name: habitInput.value, done: false, streak: 0 };
+      habits.push(newHabit);
+      habitInput.value = "";
+      saveHabits();
+      renderHabits();
+    });
+
+    renderHabits();
+  </script>
+</body>
+</html>
